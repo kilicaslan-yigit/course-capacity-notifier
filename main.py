@@ -27,7 +27,7 @@ class Notifier:
         self.crn_in = urlparse.parse_qs(parsed.query)['crn_in'][0]
 
     def checkCourse(self):
-        print('Capacity for',str(self.crn_in),'is ', end='')
+        print('Available Capacity for',str(self.crn_in),'is ', end='')
         page = requests.get(self.course_url)
         soup = BeautifulSoup(page.content, 'html.parser')
         table = soup.find('table',attrs={'summary':'This layout table is used to present the seating numbers.'})
@@ -57,7 +57,7 @@ if __name__ == '__main__':
     try:
         course_url = sys.argv[1]
         notifier = Notifier(course_url)
-        if sys.argv[2]:
+        if len(sys.argv) != 2:
             num_of_exect = int(sys.argv[2])
             notifier.run(num_of_exect)
         else:
